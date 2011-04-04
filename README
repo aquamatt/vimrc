@@ -1,0 +1,16 @@
+http://stevelosh.com/blog/2010/09/coming-home-to-vim/
+
+Bundles:
+Pathogen to sort them out:
+http://github.com/tpope/vim-pathogen
+
+Command-T (needs ruby and ruby-dev)
+https://wincent.com/products/command-t
+
+Ack plugin
+http://github.com/mileszs/ack.vim
+
+Solarize colour scheme for gvim:
+https://github.com/altercation/vim-colors-solarized
+
+
