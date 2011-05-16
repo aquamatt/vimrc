@@ -14,6 +14,7 @@ set smartcase
 set incsearch
 set showmatch
 set hlsearch
+nnoremap <leader><space> :noh<cr>
 
 " set line numbers on
 set number
