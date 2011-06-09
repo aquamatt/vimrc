@@ -16,8 +16,18 @@ set showmatch
 set hlsearch
 nnoremap <leader><space> :noh<cr>
 
+" set spell-check highlighting on 
+" use ]s [s to go to next/previous world
+" =z to get suggestions
+" zg to add word under the cursor to the dictionary
+set spell
+
 " set line numbers on
 set number
+
+" soft wrap
+:set formatoptions=1
+:set lbr
 
 set shiftwidth=4
 set tabstop=4
@@ -40,6 +50,9 @@ nnoremap <leader>w <C-w><C-v><C-l>
 
 " makes Ack easier to get to
 nnoremap <leader>a :Ack
+
+" map to aspell "
+nnoremap <leader>s :w!<CR>:!aspell check %<CR>:e! %<CR>
 
 if has("gui_running")
     colorscheme solarized
