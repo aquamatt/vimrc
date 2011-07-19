@@ -62,3 +62,10 @@ else
 "    colorscheme calmar256-light
 "    colorscheme textmate16
 endif
+
+" tab command shortcuts
+nnoremap th :tabfirst<CR>
+nnoremap tj :tabnext<CR>
+nnoremap tk :tabprev<CR>
+nnoremap tl :tablast<CR>
+nnoremap te :tabedit<Space>
