@@ -18,7 +18,7 @@ nnoremap <leader><space> :noh<cr>
 
 " set spell-check highlighting on 
 " use ]s [s to go to next/previous world
-" =z to get suggestions
+" z= to get suggestions
 " zg to add word under the cursor to the dictionary
 set spell
 
@@ -69,3 +69,8 @@ nnoremap tj :tabnext<CR>
 nnoremap tk :tabprev<CR>
 nnoremap tl :tablast<CR>
 nnoremap te :tabedit<Space>
+
+filetype plugin indent on
+au FileType py set autoindent
+au FileType py set smartindent
+au FileType py set textwidth=79 "PEP8 friendly
