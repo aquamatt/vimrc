@@ -26,8 +26,8 @@ set spell
 set number
 
 " soft wrap
-:set formatoptions=1
-:set lbr
+set formatoptions=1
+set lbr
 
 set shiftwidth=4
 set tabstop=4
@@ -70,7 +70,17 @@ nnoremap tk :tabprev<CR>
 nnoremap tl :tablast<CR>
 nnoremap te :tabedit<Space>
 
-filetype plugin indent on
-au FileType py set autoindent
-au FileType py set smartindent
-au FileType py set textwidth=79 "PEP8 friendly
+" scrolling modes - 'typewriter scrolling'
+nnoremap zm :set scrolloff=999<CR>
+nnoremap zx :set scrolloff=0<CR>
+"good for coding 
+nnoremap zp :set scrolloff=5<CR>
+" let's default to a little scrolloff
+set scrolloff=5
+
+filetype plugin on
+filetype indent on
+au FileType python set autoindent
+au FileType python set smartindent
+au FileType python set textwidth=79 "PEP8 friendly
+au FileType python set scrolloff=5 "modest typewriter mode
