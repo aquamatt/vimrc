@@ -26,6 +26,10 @@ set spell
 set number
 
 " soft wrap
+set wrap
+set linebreak
+set nolist " list disables linebreak
+
 set formatoptions=1
 set lbr
 
@@ -48,6 +52,12 @@ nnoremap <leader>u 0xj
 " split vertically, change to the window
 nnoremap <leader>w <C-w><C-v><C-l>
 
+" makes nav around windows easier. 
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-h> <C-W>h
+map <C-l> <C-W>l
+
 " makes Ack easier to get to
 nnoremap <leader>a :Ack
 
@@ -59,14 +69,16 @@ if has("gui_running")
 else
     set t_Co=256
     colorscheme calmar256-dark
-"    colorscheme calmar256-light
-"    colorscheme textmate16
 endif
+
+nnoremap <leader>1 :colorscheme calmar256-dark<CR>
+nnoremap <leader>2 :colorscheme calmar256-light<CR>
+nnoremap <leader>3 :colorscheme solarized<CR>
 
 " tab command shortcuts
 nnoremap th :tabfirst<CR>
-nnoremap tj :tabnext<CR>
-nnoremap tk :tabprev<CR>
+nnoremap tk :tabnext<CR>
+nnoremap tj :tabprev<CR>
 nnoremap tl :tablast<CR>
 nnoremap te :tabedit<Space>
 
