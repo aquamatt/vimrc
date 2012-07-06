@@ -96,3 +96,6 @@ au FileType python set autoindent
 au FileType python set smartindent
 au FileType python set textwidth=79 "PEP8 friendly
 au FileType python set scrolloff=5 "modest typewriter mode
+
+" disable auto-indenting
+nnoremap <leader>ni :setl noai nocin nosi inde=<CR>
