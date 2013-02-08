@@ -1,6 +1,9 @@
 call pathogen#helptags()
 call pathogen#runtime_append_all_bundles()
 
+" don't try vim compatibility
+set nocompatible
+
 " remap leader from \ to ,
 let mapleader = ","
 
@@ -23,7 +26,9 @@ nnoremap <leader><space> :noh<cr>
 set spell
 
 " set line numbers on
-set number
+"set number
+" set relative line numbers on
+set relativenumber
 
 " soft wrap
 set wrap
@@ -37,7 +42,8 @@ set shiftwidth=4
 set tabstop=4
 set expandtab
 " will work on vim >= 7.3
-"set colorcolumn=80
+set colorcolumn=80
+
 
 set encoding=utf-8
 
@@ -51,6 +57,13 @@ nnoremap <leader>u 0xj
 
 " split vertically, change to the window
 nnoremap <leader>w <C-w><C-v><C-l>
+
+" NERDTree handy shortcuts
+" For the docs:
+" https://github.com/scrooloose/nerdtree/blob/master/doc/NERD_tree.txt
+nnoremap <leader>nt :NERDTreeToggle<CR>
+nnoremap <leader>nc :NERDTreeClose<CR>
+nnoremap <leader>nf :NERDTreeFind<CR>
 
 " makes nav around windows easier. 
 map <C-j> <C-W>j
@@ -68,7 +81,7 @@ if has("gui_running")
     colorscheme solarized
 else
     set t_Co=256
-    colorscheme calmar256-dark
+    colorscheme solarized "calmar256-dark
 endif
 
 nnoremap <leader>1 :colorscheme calmar256-dark<CR>
