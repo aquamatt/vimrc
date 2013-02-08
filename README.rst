@@ -1,3 +1,13 @@
+My vimrc
+========
+
+`~/vim` directory contents with my plugins and config. Will not always
+install cleanly - you may still need to build things like command-T on
+each install (that also has a Ruby dependency).
+
+Some notes and references
+-------------------------
+
 http://stevelosh.com/blog/2010/09/coming-home-to-vim/
 
 Bundles:
