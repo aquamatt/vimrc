@@ -26,9 +26,9 @@ nnoremap <leader><space> :noh<cr>
 set spell
 
 " set line numbers on
-"set number
+set number
 " set relative line numbers on
-set relativenumber
+" set relativenumber
 
 " soft wrap
 set wrap
@@ -99,9 +99,9 @@ nnoremap te :tabedit<Space>
 nnoremap zm :set scrolloff=999<CR>
 nnoremap zx :set scrolloff=0<CR>
 "good for coding 
-nnoremap zp :set scrolloff=5<CR>
+nnoremap zp :set scrolloff=10<CR>
 " let's default to a little scrolloff
-set scrolloff=5
+set scrolloff=10
 
 filetype plugin on
 filetype indent on
@@ -109,6 +109,38 @@ au FileType python set autoindent
 au FileType python set smartindent
 au FileType python set textwidth=79 "PEP8 friendly
 au FileType python set scrolloff=5 "modest typewriter mode
+au FileType python set shiftwidth=4
+au FileType python set tabstop=4
+au FileType python set expandtab
+
+au BufNewFile,BufRead *.yaml,*.yml so ~/.vim/syntax/yaml.vim
+au FileType yaml set autoindent
+au FileType yaml set smartindent
+au FileType yaml set shiftwidth=2
+au FileType yaml set tabstop=2
+au FileType yaml set expandtab
 
 " disable auto-indenting
 nnoremap <leader>ni :setl noai nocin nosi inde=<CR>
+
+" show file encoding detected when the status bar shows
+if has("statusline")
+     set statusline=%<%f\ %h%m%r%=%{\"[\".(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\").\"]\ \"}%k\ %-14.(%l,%c%V%)\ %P
+ endif
+" always show the status bar
+set laststatus=2
+" make it possible to switch status
+nnoremap <leader>ss :set laststatus=2<CR>
+nnoremap <leader>hs :set laststatus=1<CR>
+
+" re-formatting of a paragraph
+nnoremap <leader>r gqip
+
+" Disable quote concealing by the JSON plugin which can be a bit confusing
+let g:vim_json_syntax_conceal = 0
+
+
+" ignore certain file patterns in, e.g., CommandT
+set wildignore=*\.pyc
+" ditto in Nerd Tree
+let NERDTreeIgnore = ['\.pyc$']

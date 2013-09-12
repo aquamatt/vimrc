@@ -23,4 +23,5 @@ http://github.com/mileszs/ack.vim
 Solarize colour scheme for gvim:
 https://github.com/altercation/vim-colors-solarized
 
-
+JSON plugin
+https://github.com/elzr/vim-json
