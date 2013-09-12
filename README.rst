@@ -25,3 +25,6 @@ https://github.com/altercation/vim-colors-solarized
 
 JSON plugin
 https://github.com/elzr/vim-json
+
+Notes on code folding:
+http://vim.wikia.com/wiki/Folding
