@@ -139,7 +139,6 @@ nnoremap <leader>r gqip
 " Disable quote concealing by the JSON plugin which can be a bit confusing
 let g:vim_json_syntax_conceal = 0
 
-
 " ignore certain file patterns in, e.g., CommandT
 set wildignore=*\.pyc
 " ditto in Nerd Tree
