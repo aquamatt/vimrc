@@ -1,9 +1,7 @@
 My vimrc
 ========
 
-`~/vim` directory contents with my plugins and config. Will not always
-install cleanly - you may still need to build things like command-T on
-each install (that also has a Ruby dependency).
+`~/vim` directory contents with my plugins and config. 
 
 Some notes and references
 -------------------------
@@ -14,8 +12,9 @@ Bundles:
 Pathogen to sort them out:
 http://github.com/tpope/vim-pathogen
 
-Command-T (needs ruby and ruby-dev)
-https://wincent.com/products/command-t
+CTL-P:
+New command-t
+http://kien.github.io/ctrlp.vim/
 
 Ack plugin
 http://github.com/mileszs/ack.vim

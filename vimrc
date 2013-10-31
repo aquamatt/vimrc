@@ -143,3 +143,6 @@ let g:vim_json_syntax_conceal = 0
 set wildignore=*\.pyc
 " ditto in Nerd Tree
 let NERDTreeIgnore = ['\.pyc$']
+
+" CTRL-P
+set runtimepath^=~/.vim/bundle/ctrlp.vim
