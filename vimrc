@@ -78,15 +78,21 @@ nnoremap <leader>a :Ack
 nnoremap <leader>s :w!<CR>:!aspell check %<CR>:e! %<CR>
 
 if has("gui_running")
-    colorscheme solarized
+"    colorscheme solarized
+    colorscheme molokai
 else
     set t_Co=256
-    colorscheme solarized "calmar256-dark
+"    colorscheme solarized "calmar256-dark
+    colorscheme molokai
 endif
 
-nnoremap <leader>1 :colorscheme calmar256-dark<CR>
-nnoremap <leader>2 :colorscheme calmar256-light<CR>
-nnoremap <leader>3 :colorscheme solarized<CR>
+nnoremap <leader>1 :colorscheme molokai<CR>
+nnoremap <leader>2 :colorscheme calmar256-dark<CR>
+nnoremap <leader>3 :colorscheme calmar256-light<CR>
+nnoremap <leader>4 :colorscheme solarized<CR>
+
+" auto-reload changed files
+set autoread
 
 " tab command shortcuts
 nnoremap th :tabfirst<CR>
@@ -146,6 +152,33 @@ let NERDTreeIgnore = ['\.pyc$']
 
 " CTRL-P
 set runtimepath^=~/.vim/bundle/ctrlp.vim
+" ctrlp
+nnoremap <leader>t :CtrlP<CR>
+nnoremap <leader>b :CtrlPBuffer<cr>
+nnoremap <leader>m :CtrlPMRU<cr>
+
+let g:ctrlp_match_window_reversed = 0
+let g:ctrlp_max_height = 30
+
+let g:ctrlp_max_files = 10000
+
+let g:ctrlp_prompt_mappings = {
+  \  'AcceptSelection("t")': ['<cr>'],
+  \  'AcceptSelection("e")': ['<2-LeftMouse>'],
+  \ }
+
+if has("unix")
+    let g:ctrlp_user_command = {
+    \ 'types': {
+        \ 1: ['.git/', 'cd %s && git ls-files']
+        \ },
+    \ 'fallback': 'find %s -type f | head -' . g:ctrlp_max_files
+    \ }
+endif
+
+" let g:ctrlp_clear_cache_on_exit = 0
+" let g:ctrlp_cache_dir = $HOME . '/.vim/.cache/ctrlp'
+
 
 " FixWhitespace shortcut
 nnoremap <leader>f :FixWhitespace<CR>
