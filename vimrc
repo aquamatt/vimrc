@@ -146,3 +146,6 @@ let NERDTreeIgnore = ['\.pyc$']
 
 " CTRL-P
 set runtimepath^=~/.vim/bundle/ctrlp.vim
+
+" FixWhitespace shortcut
+nnoremap <leader>f :FixWhitespace<CR>

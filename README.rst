@@ -27,3 +27,7 @@ https://github.com/elzr/vim-json
 
 Notes on code folding:
 http://vim.wikia.com/wiki/Folding
+
+Trailing Whitespace:
+https://github.com/davidszotten/vim-trailing-whitespace
+
