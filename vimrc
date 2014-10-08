@@ -1,6 +1,9 @@
 call pathogen#helptags()
 call pathogen#runtime_append_all_bundles()
 
+" set fonts
+set guifont=Ubuntu\ Mono\ 14
+
 " don't try vim compatibility
 set nocompatible
 
@@ -19,7 +22,7 @@ set showmatch
 set hlsearch
 nnoremap <leader><space> :noh<cr>
 
-" set spell-check highlighting on 
+" set spell-check highlighting on
 " use ]s [s to go to next/previous world
 " z= to get suggestions
 " zg to add word under the cursor to the dictionary
@@ -65,7 +68,7 @@ nnoremap <leader>nt :NERDTreeToggle<CR>
 nnoremap <leader>nc :NERDTreeClose<CR>
 nnoremap <leader>nf :NERDTreeFind<CR>
 
-" makes nav around windows easier. 
+" makes nav around windows easier.
 map <C-j> <C-W>j
 map <C-k> <C-W>k
 map <C-h> <C-W>h
@@ -104,7 +107,7 @@ nnoremap te :tabedit<Space>
 " scrolling modes - 'typewriter scrolling'
 nnoremap zm :set scrolloff=999<CR>
 nnoremap zx :set scrolloff=0<CR>
-"good for coding 
+"good for coding
 nnoremap zp :set scrolloff=10<CR>
 " let's default to a little scrolloff
 set scrolloff=10
@@ -118,6 +121,14 @@ au FileType python set scrolloff=5 "modest typewriter mode
 au FileType python set shiftwidth=4
 au FileType python set tabstop=4
 au FileType python set expandtab
+
+au FileType rst set autoindent
+au FileType rst set smartindent
+au FileType rst set textwidth=79 "PEP8 friendly
+au FileType rst set scrolloff=5 "modest typewriter mode
+au FileType rst set shiftwidth=4
+au FileType rst set tabstop=4
+au FileType rst set expandtab
 
 au BufNewFile,BufRead *.yaml,*.yml so ~/.vim/syntax/yaml.vim
 au FileType yaml set autoindent
@@ -156,29 +167,29 @@ set runtimepath^=~/.vim/bundle/ctrlp.vim
 nnoremap <leader>t :CtrlP<CR>
 nnoremap <leader>b :CtrlPBuffer<cr>
 nnoremap <leader>m :CtrlPMRU<cr>
-
+"
 let g:ctrlp_match_window_reversed = 0
-let g:ctrlp_max_height = 30
-
-let g:ctrlp_max_files = 10000
-
-let g:ctrlp_prompt_mappings = {
-  \  'AcceptSelection("t")': ['<cr>'],
-  \  'AcceptSelection("e")': ['<2-LeftMouse>'],
-  \ }
-
-if has("unix")
-    let g:ctrlp_user_command = {
-    \ 'types': {
-        \ 1: ['.git/', 'cd %s && git ls-files']
-        \ },
-    \ 'fallback': 'find %s -type f | head -' . g:ctrlp_max_files
-    \ }
-endif
-
-" let g:ctrlp_clear_cache_on_exit = 0
-" let g:ctrlp_cache_dir = $HOME . '/.vim/.cache/ctrlp'
-
-
+"let g:ctrlp_max_height = 30
+"
+"let g:ctrlp_max_files = 10000
+"
+"let g:ctrlp_prompt_mappings = {
+"  \  'AcceptSelection("t")': ['<cr>'],
+"  \  'AcceptSelection("e")': ['<2-LeftMouse>'],
+"  \ }
+"
+"if has("unix")
+"    let g:ctrlp_user_command = {
+"    \ 'types': {
+"        \ 1: ['.git/', 'cd %s && git ls-files']
+"        \ },
+"    \ 'fallback': 'find %s -type f | head -' . g:ctrlp_max_files
+"    \ }
+"endif
+"
+"" let g:ctrlp_clear_cache_on_exit = 0
+"" let g:ctrlp_cache_dir = $HOME . '/.vim/.cache/ctrlp'
+"
+"
 " FixWhitespace shortcut
 nnoremap <leader>f :FixWhitespace<CR>
