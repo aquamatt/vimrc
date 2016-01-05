@@ -3,6 +3,36 @@ History
 -------
 
 
+4.0.4 (2015-08-25)
+++++++++++++++++++
+
+- upgrade wakatime cli to v4.1.1
+- send hostname in X-Machine-Name header
+- catch exceptions from pygments.modeline.get_filetype_from_buffer
+- upgrade requests package to v2.7.0
+- handle non-ASCII characters in import path on Windows, won't fix for Python2
+- upgrade argparse to v1.3.0
+- move language translations to api server
+- move extension rules to api server
+- detect correct header file language based on presence of .cpp or .c files named the same as the .h file
+
+
+4.0.3 (2015-06-23)
+++++++++++++++++++
+
+- fix offline logging
+- limit language detection to known file extensions, unless file contents has a vim modeline
+- upgrade wakatime cli to v4.0.16
+
+
+4.0.2 (2015-06-11)
+++++++++++++++++++
+
+- upgrade wakatime cli to v4.0.15
+- guess language using multiple methods, then use most accurate guess
+- use entity and type for new heartbeats api resource schema
+
+
 4.0.1 (2015-05-31)
 ++++++++++++++++++
 

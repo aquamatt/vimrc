@@ -19,9 +19,10 @@ import re
 import sys
 import time
 import traceback
+import socket
 try:
     import ConfigParser as configparser
-except ImportError:
+except ImportError:  # pragma: nocover
     import configparser
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -32,15 +33,18 @@ from .compat import u, open, is_py3
 from .logger import setup_logging
 from .offlinequeue import Queue
 from .packages import argparse
-from .packages import simplejson as json
 from .packages.requests.exceptions import RequestException
-from .project import find_project
+from .project import get_project_info
 from .session_cache import SessionCache
 from .stats import get_file_stats
 try:
-    from .packages import tzlocal
-except:
-    from .packages import tzlocal3 as tzlocal
+    from .packages import simplejson as json  # pragma: nocover
+except (ImportError, SyntaxError):
+    import json  # pragma: nocover
+try:
+    from .packages import tzlocal  # pragma: nocover
+except:  # pragma: nocover
+    from .packages import tzlocal3 as tzlocal  # pragma: nocover
 
 
 log = logging.getLogger('WakaTime')
@@ -53,45 +57,6 @@ class FileAction(argparse.Action):
         setattr(namespace, self.dest, values)
 
 
-def upgradeConfigFile(configFile):
-    """For backwards-compatibility, upgrade the existing config file
-    to work with configparser and rename from .wakatime.conf to .wakatime.cfg.
-    """
-
-    if os.path.isfile(configFile):
-        # if upgraded cfg file already exists, don't overwrite it
-        return
-
-    oldConfig = os.path.join(os.path.expanduser('~'), '.wakatime.conf')
-    try:
-        configs = {
-            'ignore': [],
-        }
-
-        with open(oldConfig, 'r', encoding='utf-8') as fh:
-            for line in fh.readlines():
-                line = line.split('=', 1)
-                if len(line) == 2 and line[0].strip() and line[1].strip():
-                    if line[0].strip() == 'ignore':
-                        configs['ignore'].append(line[1].strip())
-                    else:
-                        configs[line[0].strip()] = line[1].strip()
-
-        with open(configFile, 'w', encoding='utf-8') as fh:
-            fh.write("[settings]\n")
-            for name, value in configs.items():
-                if isinstance(value, list):
-                    fh.write("%s=\n" % name)
-                    for item in value:
-                        fh.write("    %s\n" % item)
-                else:
-                    fh.write("%s = %s\n" % (name, value))
-
-        os.remove(oldConfig)
-    except IOError:
-        pass
-
-
 def parseConfigFile(configFile=None):
     """Returns a configparser.SafeConfigParser instance with configs
     read from the config file. Default location of the config file is
@@ -100,8 +65,6 @@ def parseConfigFile(configFile=None):
 
     if not configFile:
         configFile = os.path.join(os.path.expanduser('~'), '.wakatime.cfg')
-
-    upgradeConfigFile(configFile)
 
     configs = configparser.SafeConfigParser()
     try:
@@ -116,16 +79,11 @@ def parseConfigFile(configFile=None):
     return configs
 
 
-def parseArguments(argv):
+def parseArguments():
     """Parse command line arguments and configs from ~/.wakatime.cfg.
     Command line arguments take precedence over config file settings.
     Returns instances of ArgumentParser and SafeConfigParser.
     """
-
-    try:
-        sys.argv
-    except AttributeError:
-        sys.argv = argv
 
     # define supported command line arguments
     parser = argparse.ArgumentParser(
@@ -161,6 +119,7 @@ def parseArguments(argv):
             help='optional project name')
     parser.add_argument('--alternate-project', dest='alternate_project',
             help='optional alternate project name; auto-discovered project takes priority')
+    parser.add_argument('--hostname', dest='hostname', help='hostname of current machine.')
     parser.add_argument('--disableoffline', dest='offline',
             action='store_false',
             help='disables offline time logging instead of queuing logged time')
@@ -187,7 +146,7 @@ def parseArguments(argv):
     parser.add_argument('--version', action='version', version=__version__)
 
     # parse command line arguments
-    args = parser.parse_args(args=argv[1:])
+    args = parser.parse_args()
 
     # use current unix epoch timestamp by default
     if not args.timestamp:
@@ -265,7 +224,7 @@ def should_exclude(fileName, include, exclude):
                         msg=u(ex),
                         pattern=u(pattern),
                     ))
-        except TypeError:
+        except TypeError:  # pragma: nocover
             pass
         try:
             for pattern in exclude:
@@ -278,7 +237,7 @@ def should_exclude(fileName, include, exclude):
                         msg=u(ex),
                         pattern=u(pattern),
                     ))
-        except TypeError:
+        except TypeError:  # pragma: nocover
             pass
     return False
 
@@ -303,7 +262,7 @@ def get_user_agent(plugin):
     return user_agent
 
 
-def send_heartbeat(project=None, branch=None, stats={}, key=None, targetFile=None,
+def send_heartbeat(project=None, branch=None, hostname=None, stats={}, key=None, targetFile=None,
         timestamp=None, isWrite=None, plugin=None, offline=None, notfile=False,
         hidefilenames=None, proxy=None, api_url=None, **kwargs):
     """Sends heartbeat as POST request to WakaTime api server.
@@ -314,14 +273,12 @@ def send_heartbeat(project=None, branch=None, stats={}, key=None, targetFile=Non
     log.debug('Sending heartbeat to api at %s' % api_url)
     data = {
         'time': timestamp,
-        'file': targetFile,
+        'entity': targetFile,
+        'type': 'file',
     }
     if hidefilenames and targetFile is not None and not notfile:
-        data['file'] = data['file'].rsplit('/', 1)[-1].rsplit('\\', 1)[-1]
-        if len(data['file'].strip('.').split('.', 1)) > 1:
-            data['file'] = u('HIDDEN.{ext}').format(ext=u(data['file'].strip('.').rsplit('.', 1)[-1]))
-        else:
-            data['file'] = u('HIDDEN')
+        extension = u(os.path.splitext(data['entity'])[1])
+        data['entity'] = u('HIDDEN{0}').format(extension)
     if stats.get('lines'):
         data['lines'] = stats['lines']
     if stats.get('language'):
@@ -350,6 +307,8 @@ def send_heartbeat(project=None, branch=None, stats={}, key=None, targetFile=Non
         'Accept': 'application/json',
         'Authorization': auth,
     }
+    if hostname:
+        headers['X-Machine-Name'] = hostname
     proxies = {}
     if proxy:
         proxies['https'] = proxy
@@ -420,11 +379,10 @@ def send_heartbeat(project=None, branch=None, stats={}, key=None, targetFile=Non
     return False
 
 
-def main(argv=None):
-    if not argv:
-        argv = sys.argv
+def main(argv):
+    sys.argv = ['wakatime'] + argv
 
-    args, configs = parseArguments(argv)
+    args, configs = parseArguments()
     if configs is None:
         return 103 # config file parsing error
 
@@ -442,22 +400,15 @@ def main(argv=None):
         stats = get_file_stats(args.targetFile, notfile=args.notfile,
                                lineno=args.lineno, cursorpos=args.cursorpos)
 
-        project = None
+        project, branch = None, None
         if not args.notfile:
-            project = find_project(args.targetFile, configs=configs)
-        branch = None
-        project_name = args.project
-        if project:
-            branch = project.branch()
-            if not project_name:
-                project_name = project.name()
-        if not project_name:
-            project_name = args.alternate_project
+            project, branch = get_project_info(configs=configs, args=args)
 
         kwargs = vars(args)
-        kwargs['project'] = project_name
+        kwargs['project'] = project
         kwargs['branch'] = branch
         kwargs['stats'] = stats
+        kwargs['hostname'] = args.hostname or socket.gethostname()
 
         if send_heartbeat(**kwargs):
             queue = Queue()
@@ -470,6 +421,7 @@ def main(argv=None):
                     targetFile=heartbeat['file'],
                     timestamp=heartbeat['time'],
                     branch=heartbeat['branch'],
+                    hostname=kwargs['hostname'],
                     stats=json.loads(heartbeat['stats']),
                     key=args.key,
                     isWrite=heartbeat['is_write'],
