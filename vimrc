@@ -193,3 +193,6 @@ let g:ctrlp_match_window_reversed = 0
 "
 " FixWhitespace shortcut
 nnoremap <leader>f :FixWhitespace<CR>
+
+" Flake8 customisations
+let g:flake8_show_in_gutter=1  " show
