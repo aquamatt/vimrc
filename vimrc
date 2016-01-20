@@ -82,17 +82,22 @@ nnoremap <leader>s :w!<CR>:!aspell check %<CR>:e! %<CR>
 
 if has("gui_running")
 "    colorscheme solarized
-    colorscheme molokai
+    colorscheme distinguished
 else
     set t_Co=256
-"    colorscheme solarized "calmar256-dark
-    colorscheme molokai
+    colorscheme distinguished
 endif
 
 nnoremap <leader>1 :colorscheme molokai<CR>
 nnoremap <leader>2 :colorscheme calmar256-dark<CR>
 nnoremap <leader>3 :colorscheme calmar256-light<CR>
 nnoremap <leader>4 :colorscheme solarized<CR>
+nnoremap <leader>5 :colorscheme grb256<CR>
+nnoremap <leader>6 :colorscheme distinguished<CR>
+
+" switch light and dark
+nnoremap <leader>[ :set background=light<CR>
+nnoremap <leader>] :set background=dark<CR>
 
 " auto-reload changed files
 set autoread
