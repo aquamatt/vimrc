@@ -79,26 +79,6 @@ nnoremap <leader>a :Ack
 
 " map to aspell "
 nnoremap <leader>s :w!<CR>:!aspell check %<CR>:e! %<CR>
-
-if has("gui_running")
-"    colorscheme solarized
-    colorscheme distinguished
-else
-    set t_Co=256
-    colorscheme distinguished
-endif
-
-nnoremap <leader>1 :colorscheme molokai<CR>
-nnoremap <leader>2 :colorscheme calmar256-dark<CR>
-nnoremap <leader>3 :colorscheme calmar256-light<CR>
-nnoremap <leader>4 :colorscheme solarized<CR>
-nnoremap <leader>5 :colorscheme grb256<CR>
-nnoremap <leader>6 :colorscheme distinguished<CR>
-
-" switch light and dark
-nnoremap <leader>[ :set background=light<CR>
-nnoremap <leader>] :set background=dark<CR>
-
 " auto-reload changed files
 set autoread
 
@@ -167,13 +147,18 @@ set wildignore=*\.pyc
 let NERDTreeIgnore = ['\.pyc$']
 
 " CTRL-P
+" https://github.com/ctrlpvim/ctrlp.vim
 set runtimepath^=~/.vim/bundle/ctrlp.vim
-" ctrlp
 nnoremap <leader>t :CtrlP<CR>
 nnoremap <leader>b :CtrlPBuffer<cr>
 nnoremap <leader>m :CtrlPMRU<cr>
 "
 let g:ctrlp_match_window_reversed = 0
+let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+  \ 'file': '\v\.(exe|so|dll)$',
+  \ }
 "let g:ctrlp_max_height = 30
 "
 "let g:ctrlp_max_files = 10000
@@ -194,10 +179,32 @@ let g:ctrlp_match_window_reversed = 0
 "
 "" let g:ctrlp_clear_cache_on_exit = 0
 "" let g:ctrlp_cache_dir = $HOME . '/.vim/.cache/ctrlp'
-"
-"
+
+
+
 " FixWhitespace shortcut
 nnoremap <leader>f :FixWhitespace<CR>
 
 " Flake8 customisations
 let g:flake8_show_in_gutter=1  " show
+
+nnoremap <leader>1 :colorscheme molokai<CR>
+nnoremap <leader>2 :colorscheme calmar256-dark<CR>
+nnoremap <leader>3 :colorscheme calmar256-light<CR>
+nnoremap <leader>4 :colorscheme solarized<CR>
+nnoremap <leader>5 :colorscheme github<CR>
+nnoremap <leader>6 :colorscheme distinguished<CR>
+
+" switch light and dark
+nnoremap <leader>[ :set background=light<CR>
+nnoremap <leader>] :set background=dark<CR>
+
+if has("gui_running")
+"    colorscheme solarized
+"    colorscheme distinguished
+    colorscheme github
+else
+    set t_Co=256
+"    colorscheme distinguished
+    colorscheme github
+endif
