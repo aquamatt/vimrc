@@ -202,6 +202,7 @@ nnoremap <leader>4 :colorscheme solarized<CR>
 nnoremap <leader>5 :colorscheme github<CR>
 nnoremap <leader>6 :colorscheme distinguished<CR>
 nnoremap <leader>7 :colorscheme neodark<CR>
+nnoremap <leader>8 :colorscheme tender<CR>
 
 " switch light and dark
 nnoremap <leader>[ :set background=light<CR>
