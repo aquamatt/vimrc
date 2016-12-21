@@ -122,6 +122,13 @@ au FileType yaml set shiftwidth=2
 au FileType yaml set tabstop=2
 au FileType yaml set expandtab
 
+au FileType tf set autoindent
+au FileType tf set smartindent
+au FileType tf set shiftwidth=2
+au FileType tf set scrolloff=5 "modest typewriter mode
+au FileType tf set tabstop=2
+au FileType tf set expandtab
+
 " disable auto-indenting
 nnoremap <leader>ni :setl noai nocin nosi inde=<CR>
 
@@ -136,7 +143,7 @@ nnoremap <leader>ss :set laststatus=2<CR>
 nnoremap <leader>hs :set laststatus=1<CR>
 
 " re-formatting of a paragraph
-nnoremap <leader>r gqip
+nnoremap <leader>r gq
 
 " Disable quote concealing by the JSON plugin which can be a bit confusing
 let g:vim_json_syntax_conceal = 0
@@ -194,6 +201,7 @@ nnoremap <leader>3 :colorscheme calmar256-light<CR>
 nnoremap <leader>4 :colorscheme solarized<CR>
 nnoremap <leader>5 :colorscheme github<CR>
 nnoremap <leader>6 :colorscheme distinguished<CR>
+nnoremap <leader>7 :colorscheme neodark<CR>
 
 " switch light and dark
 nnoremap <leader>[ :set background=light<CR>
