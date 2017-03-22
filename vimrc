@@ -107,6 +107,14 @@ au FileType python set shiftwidth=4
 au FileType python set tabstop=4
 au FileType python set expandtab
 
+au FileType markdown set autoindent
+au FileType markdown set smartindent
+au FileType markdown set textwidth=79 "PEP8 friendly
+au FileType markdown set scrolloff=5 "modest typewriter mode
+au FileType markdown set shiftwidth=4
+au FileType markdown set tabstop=4
+au FileType markdown set expandtab
+
 au FileType rst set autoindent
 au FileType rst set smartindent
 au FileType rst set textwidth=79 "PEP8 friendly
@@ -211,9 +219,9 @@ nnoremap <leader>] :set background=dark<CR>
 if has("gui_running")
 "    colorscheme solarized
 "    colorscheme distinguished
-    colorscheme github
+    colorscheme tender
 else
     set t_Co=256
 "    colorscheme distinguished
-    colorscheme github
+    colorscheme tender
 endif
