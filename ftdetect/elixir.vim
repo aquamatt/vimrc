@@ -1,1 +1,0 @@
-../bundle/vim-elixir/ftdetect/elixir.vim

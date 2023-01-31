@@ -1,5 +1,18 @@
-call pathogen#helptags()
-call pathogen#runtime_append_all_bundles()
+" Things needed for Vim-Wiki
+syntax on
+" Define wikis and change wiki home to ~/Notepad and enable standard Markdown syntax
+let wiki_general = {}
+let wiki_general.path = '~/Notepad/vimwiki/'
+let wiki_general.syntax = 'markdown'
+let wiki_general.ext = '.md'
+
+let wiki_humn = {}
+let wiki_humn.path = '/home/mp/business/rethought/docs/client/humn/calls/'
+let wiki_humn.syntax = 'markdown'
+let wiki_humn.ext = '.md'
+
+" let g:vimwiki_list = [{'path': '~/Notepad/vimwiki/', 'syntax': 'markdown', 'ext': '.md'}]
+let g:vimwiki_list = [wiki_general, wiki_humn]
 
 " set fonts
 set guifont=Ubuntu\ Mono\ 14
@@ -9,6 +22,10 @@ set nocompatible
 
 " remap leader from \ to ,
 let mapleader = ","
+
+" map semi-colon to FZF finder (which will only work once FZF 0.23 released to
+" Linux Mint
+map ; :Files<CR>
 
 " make regex behave like perl/python without vi specialness
 nnoremap / /\v
@@ -46,7 +63,6 @@ set tabstop=4
 set expandtab
 " will work on vim >= 7.3
 set colorcolumn=80
-
 
 set encoding=utf-8
 
@@ -89,6 +105,9 @@ nnoremap tj :tabprev<CR>
 nnoremap tl :tablast<CR>
 nnoremap te :tabedit<Space>
 
+" reformat a paragraph
+nnoremap <leader>p vapgq
+
 " scrolling modes - 'typewriter scrolling'
 nnoremap zm :set scrolloff=999<CR>
 nnoremap zx :set scrolloff=0<CR>
@@ -97,45 +116,18 @@ nnoremap zp :set scrolloff=10<CR>
 " let's default to a little scrolloff
 set scrolloff=10
 
+" highlight  the current line
+set cursorline
+:hi CursorLine   cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
+:hi CursorColumn cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
+":nnoremap <Leader>C :set cursorline! cursorcolumn!<CR>
+" I actually find the highlighted column a bit annoying...
+:nnoremap <Leader>C :set cursorline!<CR>
+
+
 filetype plugin on
 filetype indent on
-au FileType python set autoindent
-au FileType python set smartindent
-au FileType python set textwidth=79 "PEP8 friendly
-au FileType python set scrolloff=5 "modest typewriter mode
-au FileType python set shiftwidth=4
-au FileType python set tabstop=4
-au FileType python set expandtab
-
-au FileType markdown set autoindent
-au FileType markdown set smartindent
-au FileType markdown set textwidth=79 "PEP8 friendly
-au FileType markdown set scrolloff=5 "modest typewriter mode
-au FileType markdown set shiftwidth=4
-au FileType markdown set tabstop=4
-au FileType markdown set expandtab
-
-au FileType rst set autoindent
-au FileType rst set smartindent
-au FileType rst set textwidth=79 "PEP8 friendly
-au FileType rst set scrolloff=5 "modest typewriter mode
-au FileType rst set shiftwidth=4
-au FileType rst set tabstop=4
-au FileType rst set expandtab
-
 au BufNewFile,BufRead *.yaml,*.yml so ~/.vim/syntax/yaml.vim
-au FileType yaml set autoindent
-au FileType yaml set smartindent
-au FileType yaml set shiftwidth=2
-au FileType yaml set tabstop=2
-au FileType yaml set expandtab
-
-au FileType tf set autoindent
-au FileType tf set smartindent
-au FileType tf set shiftwidth=2
-au FileType tf set scrolloff=5 "modest typewriter mode
-au FileType tf set tabstop=2
-au FileType tf set expandtab
 
 " disable auto-indenting
 nnoremap <leader>ni :setl noai nocin nosi inde=<CR>
@@ -160,6 +152,14 @@ let g:vim_json_syntax_conceal = 0
 set wildignore=*\.pyc
 " ditto in Nerd Tree
 let NERDTreeIgnore = ['\.pyc$']
+
+
+" Command-T and CTRL-P do much the same thing - trying both
+" Command-T
+let g:CommandTPreferredImplementation='ruby'
+nnoremap <leader>T :CommandT<cr>
+nnoremap <leader>B :CommandTBuffer<cr>
+nnoremap <leader>G :CommandTGit<cr>
 
 " CTRL-P
 " https://github.com/ctrlpvim/ctrlp.vim
@@ -200,9 +200,6 @@ let g:ctrlp_custom_ignore = {
 " FixWhitespace shortcut
 nnoremap <leader>f :FixWhitespace<CR>
 
-" Flake8 customisations
-let g:flake8_show_in_gutter=1  " show
-
 nnoremap <leader>1 :colorscheme molokai<CR>
 nnoremap <leader>2 :colorscheme calmar256-dark<CR>
 nnoremap <leader>3 :colorscheme calmar256-light<CR>
@@ -225,3 +222,15 @@ else
 "    colorscheme distinguished
     colorscheme tender
 endif
+
+" Lightline plugin colour config
+" https://github.com/itchyny/lightline.vim
+let g:lightline = {
+      \ 'colorscheme': 'powerline',
+      \ }
+
+" vim-checklist mappings
+" https://github.com/evansalter/vim-checklist
+nnoremap <leader>ct :ChecklistToggleCheckbox<cr>
+nnoremap <leader>ce :ChecklistEnableCheckbox<cr>
+nnoremap <leader>cd :ChecklistDisableCheckbox<cr>
